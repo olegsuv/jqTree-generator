@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>jqtree generator</title>
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/jstree/tree.jquery.js"></script>
+    <link rel="stylesheet" href="http://mbraak.github.io//jqTree/jqtree.css">
+</head>
+<style>
+    html, body, textarea, div {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+	html, body {
+		height: 100%;
+	}
+	textarea, div {
+		height: 49%;
+        overflow: auto;;
+	}
+</style>
+<body>
+<textarea id="exist"></textarea>
+<div id="tree"></div>
+<!--<textarea id="json"></textarea>-->
+<script>
+	// generator
+
+	var count = 5000,
+		words = ['teams','roma','players','totti','season','2015','2014','2013','omnigon','events'],
+		exist = [],
+		levels = 5,
+		json = [];
+
+	for (var i = 0; i < count; i++) {
+		var temp = '';
+		for (var j = 0; j < levels; j++) {
+			if (Math.random() >= 0.5) {
+				var x = Math.ceil(Math.random() * words.length) - 1;
+				temp += '/' + words[x];
+			}
+		}
+		if (temp.length) {
+			exist.push(temp);
+		}
+	}
+
+	document.getElementById('exist').value = exist.join('\n');
+
+    var testStart = new Date();
+	// builder
+
+	for (var i = 0; i < exist.length; i++) { //
+		var id = 1;
+		var temp = exist[i].split('/');
+		var tempObject = {};
+        var link;
+		for (var j = 1; j < temp.length; j++) {
+            var tempChildren = {
+                label: temp[j],
+                id: id++
+            };
+            if (!tempObject.children || !tempObject.children.id) {
+                tempObject.children = tempChildren;
+            }
+            else {
+                link.children = [tempChildren];
+            }
+            link = tempChildren;
+		}
+        tempObject = tempObject.children;
+		json.push(tempObject);
+	}
+
+//	console.log('==========================');
+//	console.log(exist[0]);
+	console.log(json);
+
+    $('#tree').tree({
+        data: json
+    });
+
+    console.log(count + " items: "+ (new Date() - testStart) + " milliseconds");
+</script>
+
+</body>
+</html>
