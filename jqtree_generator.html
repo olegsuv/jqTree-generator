@@ -25,11 +25,10 @@
 <body>
 <textarea id="exist"></textarea>
 <div id="tree"></div>
-<!--<textarea id="json"></textarea>-->
 <script>
 	// generator
 
-	var count = 5000,
+	var count = 200,
 		words = ['teams','roma','players','totti','season','2015','2014','2013','omnigon','events'],
 		exist = [],
 		levels = 5,
@@ -38,7 +37,7 @@
 	for (var i = 0; i < count; i++) {
 		var temp = '';
 		for (var j = 0; j < levels; j++) {
-			if (Math.random() >= 0.5) {
+			if (temp == '' || Math.random() >= 0.5) {
 				var x = Math.ceil(Math.random() * words.length) - 1;
 				temp += '/' + words[x];
 			}
@@ -74,10 +73,6 @@
         tempObject = tempObject.children;
 		json.push(tempObject);
 	}
-
-//	console.log('==========================');
-//	console.log(exist[0]);
-	console.log(json);
 
     $('#tree').tree({
         data: json
