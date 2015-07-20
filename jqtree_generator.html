@@ -28,11 +28,12 @@
 <script>
 	// generator
 
-	var count = 200,
+	var count = 20,
 		words = ['teams','roma','players','totti','season','2015','2014','2013','omnigon','events'],
 		exist = [],
-		levels = 5,
-		json = [];
+		levels = 3,
+		json = [],
+        id = 0;
 
 	for (var i = 0; i < count; i++) {
 		var temp = '';
@@ -52,30 +53,28 @@
     var testStart = new Date();
 	// builder
 
-	for (var i = 0; i < exist.length; i++) { //
-		var id = 1;
-		var temp = exist[i].split('/');
-		var tempObject = {};
-        var link;
-		for (var j = 1; j < temp.length; j++) {
-            var tempChildren = {
-                label: temp[j],
-                id: id++
-            };
-            if (!tempObject.children || !tempObject.children.id) {
-                tempObject.children = tempChildren;
+    for (var i = 0 ; i< exist.length; i++) {
+        buildTree(exist[i].split('/'),json);
+    }
+
+    function buildTree(parts,treeNode) {
+        if (parts.length === 0) {
+            return;
+        }
+        for (var i = 0 ; i < treeNode.length; i++) {
+            if (parts[0] == treeNode[i].label) {
+                buildTree(parts.splice(1,parts.length),treeNode[i].children);
+                return;
             }
-            else {
-                link.children = [tempChildren];
-            }
-            link = tempChildren;
-		}
-        tempObject = tempObject.children;
-		json.push(tempObject);
-	}
+        }
+        var newNode = {'label': parts[0], id: id++, 'children':[]};
+        treeNode.push(newNode);
+        buildTree(parts.splice(1,parts.length),newNode.children);
+    }
 
     $('#tree').tree({
-        data: json
+        data: json[0].children,
+        dragAndDrop: true
     });
 
     console.log(count + " items: "+ (new Date() - testStart) + " milliseconds");
