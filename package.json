@@ -1,24 +1,11 @@
 {
-  "name": "demo",
+  "name": "jqtree-generator",
   "version": "1.0.0",
-  "description": "Demo files for share",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Demo task jqTree generator for Omnigon communication (Infront X), Jan 2015",
   "author": "olegsuv",
   "license": "ISC",
-  "dependencies": {
-    "bower": "^1.4.1",
-    "jquery": "^3.6.3",
-    "jstree": "^3.1.1"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/olegsuv/demo/tree/master"
-  },
-  "keywords": [
-    "demo"
-  ]
+    "url": "https://github.com/olegsuv/jqTree-generator"
+  }
 }

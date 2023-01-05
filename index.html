@@ -3,27 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>jqTree generator</title>
-    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/jqTree/jquery.min.js"></script>
     <script type="text/javascript" src="lib/jqTree/tree.jquery.js"></script>
     <link rel="stylesheet" href="lib/jqTree/jqTree.css">
 </head>
-<style>
-    html, body, textarea, div {
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        border: 0;
-    }
-	html, body {
-		height: 100%;
-	}
-	textarea, div {
-		height: 49%;
-        overflow: auto;;
-	}
-</style>
 <body>
-<textarea id="exist"></textarea>
+<div id="exist"></div>
 <div id="tree"></div>
 <script>
 	// generator
@@ -38,7 +23,7 @@
 	for (var i = 0; i < count; i++) {
 		var temp = '';
 		for (var j = 0; j < levels; j++) {
-			if (temp == '' || Math.random() >= 0.5) {
+			if (temp === '' || Math.random() >= 0.5) {
 				var x = Math.ceil(Math.random() * words.length) - 1;
 				temp += '/' + words[x];
 			}
@@ -48,13 +33,13 @@
 		}
 	}
 
-	document.getElementById('exist').value = exist.join('\n');
+	document.getElementById('exist').innerHTML = exist.join('<br />');
 
     var testStart = new Date();
 	// builder
 
-    for (var i = 0 ; i< exist.length; i++) {
-        buildTree(exist[i].split('/'),json);
+    for (var e = 0 ; e< exist.length; e++) {
+        buildTree(exist[e].split('/'),json);
     }
 
     function buildTree(parts,treeNode) {
@@ -62,7 +47,7 @@
             return;
         }
         for (var i = 0 ; i < treeNode.length; i++) {
-            if (parts[0] == treeNode[i].label) {
+            if (parts[0] === treeNode[i].label) {
                 buildTree(parts.splice(1,parts.length),treeNode[i].children);
                 return;
             }
